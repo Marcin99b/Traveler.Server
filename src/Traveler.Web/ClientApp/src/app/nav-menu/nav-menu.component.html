@@ -17,6 +17,17 @@
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" [routerLink]='["/fetch-data"]'>Fetch data</a>
           </li>
+          <li>
+            <mat-form-field>
+              <input matInput placeholder="Device IP Address" [formControl]="emailFormControl">
+              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </li>
         </ul>
       </div>
     </div>
