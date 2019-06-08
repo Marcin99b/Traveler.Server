@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Traveler.Web.Areas.Hubs;
 
 namespace Traveler.Web
 {
@@ -19,6 +20,15 @@ namespace Traveler.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+            services.AddSingleton<ChatHub>();
+            services.AddSignalR();
+
             services.AddMvc(options => options.EnableEndpointRouting = false)
                 .AddNewtonsoftJson();
 
@@ -27,6 +37,8 @@ namespace Traveler.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,16 +52,9 @@ namespace Traveler.Web
             {
                 app.UseExceptionHandler("/Error");
             }
-
+            app.UseCors("MyPolicy");
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
 
             app.UseSpa(spa =>
             {
@@ -62,6 +67,18 @@ namespace Traveler.Web
                 {
                     spa.UseAngularCliServer(npmScript: "start");
                 }
+            });
+            
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chat");
+            });
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id?}");
             });
         }
     }

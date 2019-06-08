@@ -1,7 +1,7 @@
 <header>
   <nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>
     <div class="container">
-      <a class="navbar-brand" [routerLink]='["/"]'>Traveller.Web</a>
+      <a class="navbar-brand" [routerLink]='["/"]'>Traveler.Web</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation"
         [attr.aria-expanded]="isExpanded" (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
@@ -17,16 +17,23 @@
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" [routerLink]='["/fetch-data"]'>Fetch data</a>
           </li>
-          <li>
+          <li class="nav-item">
+
             <mat-form-field>
-              <input matInput placeholder="Device IP Address" [formControl]="emailFormControl">
-              <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                Please enter a valid email address
-              </mat-error>
-              <mat-error *ngIf="emailFormControl.hasError('required')">
-                Email is <strong>required</strong>
+              <input matInput [(ngModel)]="ipAddress" (keyup)="checkIpAddress()" placeholder="Device IP Address"
+                     pattern="^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                     required>
+              <mat-error matError>
+                Please enter a valid IP address
               </mat-error>
             </mat-form-field>
+            
+          </li>
+          <li class="nav-item">
+            <fieldset [disabled]="true">
+              <mat-radio-button *ngIf="isConnected && ipAddressIsValid" checked>Connected</mat-radio-button>
+              <mat-radio-button *ngIf="!isConnected || !ipAddressIsValid">Disconnected</mat-radio-button>
+            </fieldset>
           </li>
         </ul>
       </div>

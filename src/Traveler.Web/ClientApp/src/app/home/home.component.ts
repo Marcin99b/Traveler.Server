@@ -1,8 +1,56 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@aspnet/signalr';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
-export class HomeComponent {
+
+export class HomeComponent implements OnInit {
+
+  private hubConnection: HubConnection;
+  nick = '';
+  message = '';
+  messages: string[] = [];
+
+  constructor(private httpClient: HttpClient) {
+
+  }
+
+
+  ngOnInit() {
+    this.nick = window.prompt('Your name:', 'John');
+
+    this.hubConnection = new HubConnectionBuilder().withUrl("/chat", {
+      skipNegotiation: true,
+      transport: 1
+    }).build();
+
+    this.hubConnection
+      .start()
+      .then(() => console.log('Connection started!'))
+      .catch(err => console.log('Error while establishing connection :('));
+
+
+    this.hubConnection.on('sendToAll', (data) => {
+      console.log(data);
+    });
+
+  }
+
+  public sendMessage(): void {
+    this.httpClient.post("/api/chat/sendMessage",
+      <MessageInfo>
+      {
+        name: this.nick,
+        message: this.message
+      }).subscribe();
+  }
+
+}
+
+interface MessageInfo {
+  name: string;
+  message: string;
 }
