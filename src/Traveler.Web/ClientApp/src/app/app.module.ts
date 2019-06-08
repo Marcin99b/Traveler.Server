@@ -12,10 +12,6 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from "./material.module";
 
-
-import 'hammerjs';
-import { MatVideoModule } from 'mat-video';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +22,6 @@ import { MatVideoModule } from 'mat-video';
   ],
   imports: [
     BrowserAnimationsModule,
-    MatVideoModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     MaterialModule,

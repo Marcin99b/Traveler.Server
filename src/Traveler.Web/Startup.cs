@@ -26,19 +26,20 @@ namespace Traveler.Web
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
+
             services.AddSingleton<ChatHub>();
             services.AddSignalR();
 
             services.AddMvc(options => options.EnableEndpointRouting = false)
                 .AddNewtonsoftJson();
 
-            // In production, the Angular files will be served from this directory
+            //In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,14 +54,25 @@ namespace Traveler.Web
                 app.UseExceptionHandler("/Error");
             }
             app.UseCors("MyPolicy");
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/signalr");
+            });
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "/{controller}/{action=Index}/{id?}");
+            });
+
+
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
@@ -68,18 +80,9 @@ namespace Traveler.Web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-            
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<ChatHub>("/chat");
-            });
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
+
+
         }
     }
 }

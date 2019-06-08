@@ -15,6 +15,16 @@ namespace Traveler.Web.Areas.Hubs
                 await Clients.All.SendCoreAsync("sendToAll", new string[] { name, message });
             }
         }
+
+        public override Task OnConnectedAsync()
+        {
+            return base.OnConnectedAsync();
+        }
+
+        public override Task OnDisconnectedAsync(Exception exception)
+        {
+            return base.OnDisconnectedAsync(exception);
+        }
     }
 
 }

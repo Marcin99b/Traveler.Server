@@ -22,10 +22,12 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.nick = window.prompt('Your name:', 'John');
 
-    this.hubConnection = new HubConnectionBuilder().withUrl("/chat", {
-      skipNegotiation: true,
-      transport: 1
-    }).build();
+    //this.hubConnection = new HubConnectionBuilder().withUrl("../chat/", {
+    //  skipNegotiation: true,
+    //  transport: 1,
+    //}).build();
+
+    this.hubConnection = new HubConnectionBuilder().withUrl("/signalr").build();
 
     this.hubConnection
       .start()
@@ -33,8 +35,8 @@ export class HomeComponent implements OnInit {
       .catch(err => console.log('Error while establishing connection :('));
 
 
-    this.hubConnection.on('sendToAll', (data) => {
-      console.log(data);
+    this.hubConnection.on('sendToAll', (nick, message) => {
+      this.messages.push(`${nick}: ${message}`);
     });
 
   }

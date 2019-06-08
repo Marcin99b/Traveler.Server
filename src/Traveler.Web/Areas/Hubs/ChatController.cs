@@ -19,8 +19,8 @@ namespace Traveler.Web.Areas.Hubs
         [HttpPost]
         public IActionResult SendMessage([FromBody] MessageInfo request)
         {
-            Task.Factory.StartNew(async () => await chatHub.SendToAll(request.Name, request.Message) );
-            
+            Task.Factory.StartNew(async () => await chatHub.SendToAll(request.Name, request.Message));
+
             return Ok();
         }
     }
