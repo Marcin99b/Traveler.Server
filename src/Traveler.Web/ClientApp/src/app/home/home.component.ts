@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@aspnet/signalr';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -12,11 +13,13 @@ export class HomeComponent implements OnInit {
   private hubConnection: HubConnection;
   nick = '';
   message = '';
-  messages: string[] = [];
+  messages: any[] = [];
+  messages$: Observable<any[]>;
 
   constructor(private httpClient: HttpClient) {
-
+    this.messages$.subscribe(x => this.messages);
   }
+
 
 
   ngOnInit() {
@@ -29,20 +32,20 @@ export class HomeComponent implements OnInit {
       .then(() => console.log('Connection started!'))
       .catch(err => console.log('Error while establishing connection :('));
 
-
-    this.hubConnection.on('sendToAll', (nick, message) => {
-      this.messages.push(`${nick}: ${message}`);
+    this.hubConnection.on('sendToAll', (nick, text) => {
+      this.messages.push({ nick: nick, text: text });
     });
 
   }
 
   public sendMessage(): void {
-    this.httpClient.post("/api/chat/sendMessage",
-      <MessageInfo>
-      {
-        name: this.nick,
-        message: this.message
-      }).subscribe();
+
+    console.log(this.hubConnection.state);
+    this.hubConnection.invoke('sendToAll', this.nick, this.message)
+      .then(() => {
+        this.message = "";
+      })
+      .catch(err => console.log(err));
   }
 
 }

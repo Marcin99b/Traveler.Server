@@ -4,8 +4,7 @@
 <button mat-button (click)="sendMessage()">Send message</button>
 
 
-<div class="container" *ngIf="messages.length > 0">
-    <div *ngFor="let message of messages">
-      <span>{{message}}</span>
-    </div>
-  </div>
+<mat-card style="margin: 15px; width: 300px;" *ngFor="let message of messages$">
+  <mat-card-title>{{ message.nick }}</mat-card-title>
+  <mat-card-content>{{ message.text }}</mat-card-content>
+</mat-card>

@@ -27,7 +27,6 @@ namespace Traveler.Web
                     .AllowAnyHeader();
             }));
 
-            services.AddSingleton<ChatHub>();
             services.AddSignalR();
 
             services.AddMvc(options => options.EnableEndpointRouting = false)
