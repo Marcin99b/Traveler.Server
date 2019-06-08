@@ -21,12 +21,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.nick = window.prompt('Your name:', 'John');
-
-    //this.hubConnection = new HubConnectionBuilder().withUrl("../chat/", {
-    //  skipNegotiation: true,
-    //  transport: 1,
-    //}).build();
-
+    
     this.hubConnection = new HubConnectionBuilder().withUrl("/signalr").build();
 
     this.hubConnection
