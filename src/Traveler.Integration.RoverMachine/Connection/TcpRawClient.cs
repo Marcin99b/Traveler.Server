@@ -7,17 +7,17 @@ namespace Traveler.Integration.RoverMachine.Connection
 {
     public class TcpRawClient : IDisposable
     {
-        private readonly TcpClient tcpClient;
-        public bool IsConnected => tcpClient.Connected;
+        private readonly TcpClient _tcpClient;
+        public bool IsConnected => _tcpClient.Connected;
 
         public TcpRawClient(IpAddress ipAddress)
         {
-            this.tcpClient = new TcpClient(ipAddress.Ip, ipAddress.Port);
+            this._tcpClient = new TcpClient(ipAddress.Ip, ipAddress.Port);
         }
 
         public void Send(byte[] message)
         {
-            using (var stream = tcpClient.GetStream())
+            using (var stream = _tcpClient.GetStream())
             {
                 stream.Write(message, 0, message.Length);
             }
@@ -25,7 +25,7 @@ namespace Traveler.Integration.RoverMachine.Connection
 
         public void Dispose()
         {
-            this.tcpClient.Dispose();
+            this._tcpClient.Dispose();
         }
     }
 }

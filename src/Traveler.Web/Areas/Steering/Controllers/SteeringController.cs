@@ -6,16 +6,17 @@ namespace Traveler.Web.Areas.Steering.Controllers
 {
     public class SteeringController : BaseApiController
     {
-        private readonly ISteeringService steeringService;
+        private readonly ISteeringService _steeringService;
 
         public SteeringController(ISteeringService steeringService)
         {
-            this.steeringService = steeringService;
+            this._steeringService = steeringService;
         }
 
         [HttpPost]
         public IActionResult SetSteering([FromBody] SetSteeringRequest request)
         {
+            this._steeringService.UpdateSteeringInfo(request.Power, request.Steering);
             return Ok();
         }
 

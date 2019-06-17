@@ -7,5 +7,7 @@ namespace Traveler.Web.Areas.Steering.Models
 {
     public class SetSteeringRequest
     {
+        public int Power { get; set; }
+        public int Steering { get; set; }
     }
 }
