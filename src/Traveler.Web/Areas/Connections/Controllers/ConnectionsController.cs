@@ -7,22 +7,21 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Traveler.Web.Areas.Connections.Models;
 
 namespace Traveler.Web.Areas.Connections.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]/[action]")]
-    public class ConnectionsController : Controller
+    public class ConnectionsController : BaseApiController
     {
         [HttpPost]
-        public IActionResult Connect([FromBody] IpAddressRequest request)
+        public IActionResult Connect([FromBody] ConnectRequest request)
         {
             try
             {
                 using (var ping = new Ping())
                 {
                     var response = ping.Send(request.IpAddress);
-                    return Json(new IpAddressResponse
+                    return Json(new ConnectResponse
                     {
                         IsConnected = response?.Status == IPStatus.Success
                     });
@@ -30,7 +29,7 @@ namespace Traveler.Web.Areas.Connections.Controllers
             }
             catch
             {
-                return Json(new IpAddressResponse
+                return Json(new ConnectResponse
                 {
                     IsConnected = false
                 });
@@ -38,13 +37,7 @@ namespace Traveler.Web.Areas.Connections.Controllers
         }
     }
 
-    public class IpAddressRequest
-    {
-        public string IpAddress { get; set; }
-    }
+    
 
-    public class IpAddressResponse
-    {
-        public bool IsConnected { get; set; }
-    }
+    
 }
