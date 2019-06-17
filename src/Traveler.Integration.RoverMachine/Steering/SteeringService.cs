@@ -23,19 +23,16 @@ namespace Traveler.Integration.RoverMachine.Steering
             steering = steering > 100 ? 100 : steering;
             steering = steering < -100 ? -100 : steering;
 
-            var left = 0;
-            var right = 0;
+            var left = power;
+            var right = power;
 
-            if (steering < 0)
+            if (steering < 0 && power > 0)
             {
-                left = Math.Abs(steering) * power / 100;
-                right = power;
+                left = power - Math.Abs(steering) * power / 100;
             }
-
-            if (steering > 0)
+            else if (steering > 0 && power > 0)
             {
-                left = power;
-                right =  Math.Abs(steering) * power / 100;
+                right = power - Math.Abs(steering) * power / 100;
             }
 
             var command = new UpdateSteeringInfoCommand(left, right, reverseGear);

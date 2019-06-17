@@ -15,7 +15,7 @@ namespace Traveler.Tests.UnitTests.Integration.RoverMachine.Steering
         [TestCase(100, 50, 100, 50)]
         [TestCase(100, -100, 0, 100)]
         [TestCase(100, -200, 0, 100)]
-        [TestCase(80, 50, 100, 40)]
+        [TestCase(80, 50, 80, 40)]
         [TestCase(0, -50, 0, 0)]
         [TestCase(80, 0, 80, 80)]
         public void ShouldCalculateSteeringCorrectly(int power, int steering, int expectedLeft, int expectedRight)
