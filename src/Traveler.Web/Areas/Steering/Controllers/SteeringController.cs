@@ -16,7 +16,7 @@ namespace Traveler.Web.Areas.Steering.Controllers
         [HttpPost]
         public IActionResult SetSteering([FromBody] SetSteeringRequest request)
         {
-            this._steeringService.UpdateSteeringInfo(request.Power, request.Steering);
+            this._steeringService.UpdateSteeringInfo(request.Power, request.Steering, request.ReverseGear);
             return Ok();
         }
 

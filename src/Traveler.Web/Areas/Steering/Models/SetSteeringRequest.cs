@@ -9,5 +9,6 @@ namespace Traveler.Web.Areas.Steering.Models
     {
         public int Power { get; set; }
         public int Steering { get; set; }
+        public bool ReverseGear { get; set; }
     }
 }
