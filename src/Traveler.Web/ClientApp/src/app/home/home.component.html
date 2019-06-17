@@ -1,10 +1,40 @@
+  <div id="power">Power: {{ p.value }}</div>
+  <mat-slider thumbLabel
+              vertical
+              tickInterval="25"
+              min="-100"
+              max="100"
+              #p
+              value="0"
+              step="25"
+              (change)="powerChange($event)" color="primary" style="width: 50px; height: 300px;"></mat-slider>
+
+  <div id="steering">Steering: {{ s.value }}</div>
+  <mat-slider thumbLabel
+              horizontal
+              tickInterval="25"
+              min="-100"
+              max="100"
+              #s
+              value="0"
+              step="25"
+              (change)="steeringChange($event)" color="primary" style="width: 300px; height: 50px;"></mat-slider>
 
 
-<input matInput [(ngModel)]="message" placeholder="Message"/><br/>
-<button mat-button (click)="sendMessage()">Send message</button>
+<video width="400" controls>
+  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+</video>
+
+<style>
+  mat-slider {
+    background-color: #333;
+    margin: 25px;
+    float: left;
+  }
 
 
-<mat-card style="margin: 15px; width: 300px;" *ngFor="let message of messages$">
-  <mat-card-title>{{ message.nick }}</mat-card-title>
-  <mat-card-content>{{ message.text }}</mat-card-content>
-</mat-card>
+  #power, #steering {
+    width: 50px;
+    float: left;
+  }
+</style>
