@@ -7,7 +7,7 @@ using Traveler.Integration.RoverMachine.Connection.Commons;
 using Traveler.Integration.RoverMachine.Connection.Models;
 using Traveler.Integration.RoverMachine.Steering.Commands;
 
-namespace Traveler.Tests.UnitTests.Integration.RoverMachine.Steering
+namespace Traveler.Tests.UnitTests.Integration.RoverMachine.Connections
 {
     [TestFixture]
     public class TcpFacadeTests
