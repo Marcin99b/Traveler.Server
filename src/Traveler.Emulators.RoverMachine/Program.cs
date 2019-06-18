@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net.Sockets;
+using Traveler.Emulators.RoverMachine.Clients;
 
 namespace Traveler.Emulators.RoverMachine
 {
@@ -6,7 +8,7 @@ namespace Traveler.Emulators.RoverMachine
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            new TcpRawListener(1234).StartListening(new ConsoleReceiver());
         }
     }
 }
