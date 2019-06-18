@@ -22,7 +22,6 @@ namespace Traveler.Emulators.RoverMachine.Clients
             this._tcpListener.Start();
             while (true)
             {
-
                 using (var socket = this._tcpListener.AcceptSocket())
                 {
                     if (socket.Connected)

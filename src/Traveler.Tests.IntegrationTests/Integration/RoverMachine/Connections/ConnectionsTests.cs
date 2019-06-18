@@ -22,7 +22,7 @@ namespace Traveler.Tests.IntegrationTests.Integration.RoverMachine.Connections
         {
             //Arrange
             var result = new byte[0];
-            var testData = new byte[5] { 1, 2, 3, 4, 5 };
+            var testData = new byte[] { 1, 2, 3, 4, 5 };
 
             var tcpReceiverMock = new Mock<IReceiver>();
             tcpReceiverMock.Setup(x => x.ReceivedData(It.IsAny<byte[]>()))
@@ -34,13 +34,15 @@ namespace Traveler.Tests.IntegrationTests.Integration.RoverMachine.Connections
             //Act
             Task.Run(() => listener.StartListening(tcpReceiverMock.Object));
 
-            var client = new TcpRawClient(new IpAddress(IPAddress.Loopback.ToString(), port));
-            client.Send(testData);
+            using (var client = new TcpRawClient(new IpAddress(IPAddress.Loopback.ToString(), port)))
+            {
+                client.Send(testData);
+            }
 
             while (result.Length == 0)
             {
-                Thread.Sleep(200);
             }
+            listener.StopListening();
 
             //Assert
             Assert.That(result, Is.EqualTo(testData));
@@ -80,6 +82,7 @@ namespace Traveler.Tests.IntegrationTests.Integration.RoverMachine.Connections
             while (receivedRequests.Count < testRequests.Count)
             {
             }
+            listener.StopListening();
 
             //Assert
             Assert.That(receivedRequests, Is.EqualTo(testRequests));

@@ -21,7 +21,6 @@ namespace Traveler.Integration.RoverMachine.Connections.Clients
             {
                 while (!stream.CanWrite)
                 {
-                    Thread.Sleep(100);
                 }
                 stream.Write(bytes, 0, bytes.Length);
             }
