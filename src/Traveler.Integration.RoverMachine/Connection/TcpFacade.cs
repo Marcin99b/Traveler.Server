@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Traveler.Integration.RoverMachine.Connection
 {
@@ -13,13 +14,16 @@ namespace Traveler.Integration.RoverMachine.Connection
             _ipAddress = ipAddress;
         }
 
+        public void Send(ICommand command)
+        {
+            var json = JsonConvert.SerializeObject(command, Formatting.None);
+            this.Send(json);
+        }
+
         public void Send(string message)
         {
             var bytes = Encoding.UTF8.GetBytes(message);
-            using (var client = new TcpRawClient(this._ipAddress))
-            {
-                client.Send(bytes);
-            }
+            this.Send(bytes);
         }
 
         public void Send(byte[] bytes)
@@ -30,9 +34,6 @@ namespace Traveler.Integration.RoverMachine.Connection
             }
         }
 
-        public void Send(ICommand command)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

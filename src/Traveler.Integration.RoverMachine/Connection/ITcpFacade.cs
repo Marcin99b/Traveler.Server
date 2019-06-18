@@ -6,8 +6,8 @@ namespace Traveler.Integration.RoverMachine.Connection
 {
     public interface ITcpFacade
     {
+        void Send(ICommand command);
         void Send(string message);
         void Send(byte[] bytes);
-        void Send(ICommand command);
     }
 }
