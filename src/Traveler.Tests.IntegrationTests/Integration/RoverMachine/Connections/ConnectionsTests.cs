@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -43,6 +44,47 @@ namespace Traveler.Tests.IntegrationTests.Integration.RoverMachine.Connections
 
             //Assert
             Assert.That(result, Is.EqualTo(testData));
+        }
+
+        [Test]
+        public void ShouldReceiveManyRequests()
+        {
+            //Arrange
+            var receivedRequests = new List<byte[]>();
+            var testRequests = new List<byte[]>()
+            {
+                Encoding.UTF8.GetBytes("test"),
+                Encoding.UTF8.GetBytes("abc"),
+                Encoding.UTF8.GetBytes("xyz"),
+            };
+
+
+            var tcpReceiverMock = new Mock<IReceiver>();
+            tcpReceiverMock.Setup(x => x.ReceivedData(It.IsAny<byte[]>()))
+                .Callback<byte[]>(x => receivedRequests.Add(x));
+
+            var port = 1234;
+            var listener = new TcpRawListener(port);
+
+            //Act
+            Task.Run(() => listener.StartListening(tcpReceiverMock.Object));
+
+            testRequests.ForEach(x =>
+            {
+                using (var client = new TcpRawClient(new IpAddress(IPAddress.Loopback.ToString(), port)))
+                {
+                    client.Send(x);
+                }
+            });
+
+            while (receivedRequests.Count < testRequests.Count)
+            {
+            }
+
+            //Assert
+            Assert.That(receivedRequests, Is.EqualTo(testRequests));
+            Assert.That(receivedRequests.Count, Is.EqualTo(testRequests.Count));
+            
         }
     }
 }

@@ -25,20 +25,18 @@ namespace Traveler.Emulators.RoverMachine.Clients
 
                 using (var socket = this._tcpListener.AcceptSocket())
                 {
-                    if (!socket.Connected)
+                    if (socket.Connected)
                     {
-                        Thread.Sleep(200);
-                    };
+                        Console.WriteLine("Connection...");
 
-                    Console.WriteLine("Connection.");
+                        var size = socket.ReceiveBufferSize;
+                        var buffer = new byte[size];
+                        size = socket.Receive(buffer);
 
-                    var size = socket.ReceiveBufferSize;
-                    var buffer = new byte[size];
-                    size = socket.Receive(buffer);
+                        var response = buffer.Take(size).ToArray();
 
-                    var response = buffer.Take(size).ToArray();
-
-                    receiver.ReceivedData(response);
+                        receiver.ReceivedData(response);
+                    }
                 }
 
             }
