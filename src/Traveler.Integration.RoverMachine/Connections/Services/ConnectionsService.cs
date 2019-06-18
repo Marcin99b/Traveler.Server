@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Traveler.Integration.RoverMachine.Connection.Commons;
 
-namespace Traveler.Integration.RoverMachine.Connection
+namespace Traveler.Integration.RoverMachine.Connections.Services
 {
-    public class ConnectionService : IConnectionService
+    public class ConnectionsService : IConnectionsService
     {
         private readonly ITcpFacade _tcpFacade;
 
-        public ConnectionService(ITcpFacade tcpFacade)
+        public ConnectionsService(ITcpFacade tcpFacade)
         {
             _tcpFacade = tcpFacade;
         }

@@ -1,9 +1,8 @@
 ﻿using Moq;
 using NUnit.Framework;
-using Traveler.Integration.RoverMachine;
-using Traveler.Integration.RoverMachine.Connection;
-using Traveler.Integration.RoverMachine.Steering;
+using Traveler.Integration.RoverMachine.Connections.Services;
 using Traveler.Integration.RoverMachine.Steering.Commands;
+using Traveler.Integration.RoverMachine.Steering.Services;
 
 namespace Traveler.Tests.UnitTests.Integration.RoverMachine.Steering
 {
@@ -23,7 +22,7 @@ namespace Traveler.Tests.UnitTests.Integration.RoverMachine.Steering
             //Arrange
             var resultCommand = new UpdateSteeringInfoCommand(0, 0, false);
 
-            var connectionServiceMock = new Mock<IConnectionService>();
+            var connectionServiceMock = new Mock<IConnectionsService>();
             connectionServiceMock.Setup(x => x.SendCommand(It.IsAny<UpdateSteeringInfoCommand>()))
                 .Callback<UpdateSteeringInfoCommand>(x => { resultCommand = x; });
 

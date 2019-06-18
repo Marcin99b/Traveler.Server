@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Text;
+﻿using System.Net.Sockets;
+using Traveler.Integration.RoverMachine.Connection.Models;
 
-namespace Traveler.Integration.RoverMachine.Connection
+namespace Traveler.Integration.RoverMachine.Connection.Clients
 {
-    public class TcpRawClient : IDisposable
+    public class TcpRawClient : ITcpRawClient
     {
         private readonly TcpClient _tcpClient;
         public bool IsConnected => _tcpClient.Connected;
@@ -15,11 +13,11 @@ namespace Traveler.Integration.RoverMachine.Connection
             this._tcpClient = new TcpClient(ipAddress.Ip, ipAddress.Port);
         }
 
-        public void Send(byte[] message)
+        public void Send(byte[] bytes)
         {
             using (var stream = _tcpClient.GetStream())
             {
-                stream.Write(message, 0, message.Length);
+                stream.Write(bytes, 0, bytes.Length);
             }
         }
 

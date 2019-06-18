@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Traveler.Integration.RoverMachine.Connection
+﻿namespace Traveler.Integration.RoverMachine.Connection.Models
 {
     public class IpAddress
     {

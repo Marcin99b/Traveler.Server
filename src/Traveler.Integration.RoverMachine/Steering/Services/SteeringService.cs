@@ -1,16 +1,16 @@
 ﻿using System;
-using Traveler.Integration.RoverMachine.Connection;
+using Traveler.Integration.RoverMachine.Connections.Services;
 using Traveler.Integration.RoverMachine.Steering.Commands;
 
-namespace Traveler.Integration.RoverMachine.Steering
+namespace Traveler.Integration.RoverMachine.Steering.Services
 {
     public class SteeringService : ISteeringService
     {
-        private readonly IConnectionService _connectionService;
+        private readonly IConnectionsService _connectionsService;
 
-        public SteeringService(IConnectionService connectionService)
+        public SteeringService(IConnectionsService connectionsService)
         {
-            this._connectionService = connectionService;
+            this._connectionsService = connectionsService;
         }
 
         /// <param name="power">value from 0 to 100</param>
@@ -36,7 +36,7 @@ namespace Traveler.Integration.RoverMachine.Steering
             }
 
             var command = new UpdateSteeringInfoCommand(left, right, reverseGear);
-            this._connectionService.SendCommand(command);
+            this._connectionsService.SendCommand(command);
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Traveler.Integration.RoverMachine.Steering.Commands;
-
-namespace Traveler.Integration.RoverMachine.Steering
+﻿namespace Traveler.Integration.RoverMachine.Steering.Services
 {
     public interface ISteeringService
     {

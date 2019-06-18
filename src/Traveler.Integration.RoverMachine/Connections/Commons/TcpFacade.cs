@@ -1,17 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using Newtonsoft.Json;
+using Traveler.Integration.RoverMachine.Connection.Clients;
+using Traveler.Integration.RoverMachine.Connection.Models;
 
-namespace Traveler.Integration.RoverMachine.Connection
+namespace Traveler.Integration.RoverMachine.Connection.Commons
 {
     public class TcpFacade : ITcpFacade
     {
         private readonly IpAddress _ipAddress;
+        private readonly ITcpRawClientsFactory _tcpRawClientsFactory;
 
-        public TcpFacade(IpAddress ipAddress)
+        public TcpFacade(IpAddress ipAddress, ITcpRawClientsFactory tcpRawClientsFactory)
         {
             _ipAddress = ipAddress;
+            _tcpRawClientsFactory = tcpRawClientsFactory;
         }
 
         public void Send(ICommand command)
@@ -28,7 +30,7 @@ namespace Traveler.Integration.RoverMachine.Connection
 
         public void Send(byte[] bytes)
         {
-            using (var client = new TcpRawClient(this._ipAddress))
+            using (var client = this._tcpRawClientsFactory.Create(this._ipAddress))
             {
                 client.Send(bytes);
             }
