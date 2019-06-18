@@ -22,6 +22,7 @@ namespace Traveler.Integration.RoverMachine.Connections.Clients
                 {
                 }
                 stream.Write(bytes, 0, bytes.Length);
+                stream.Close();
             }
         }
 
