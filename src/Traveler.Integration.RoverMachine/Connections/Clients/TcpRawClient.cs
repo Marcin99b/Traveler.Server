@@ -1,7 +1,8 @@
 ﻿using System.Net.Sockets;
+using Traveler.Integration.RoverMachine.Connection.Clients;
 using Traveler.Integration.RoverMachine.Connection.Models;
 
-namespace Traveler.Integration.RoverMachine.Connection.Clients
+namespace Traveler.Integration.RoverMachine.Connections.Clients
 {
     public class TcpRawClient : ITcpRawClient
     {
