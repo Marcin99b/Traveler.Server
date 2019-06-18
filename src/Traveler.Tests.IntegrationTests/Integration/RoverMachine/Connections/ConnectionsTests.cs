@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 using Traveler.Emulators.RoverMachine.Clients;
-using Traveler.Integration.RoverMachine.Connection.Clients;
 using Traveler.Integration.RoverMachine.Connection.Models;
 using Traveler.Integration.RoverMachine.Connections.Clients;
 

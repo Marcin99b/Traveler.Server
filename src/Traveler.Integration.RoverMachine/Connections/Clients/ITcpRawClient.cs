@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Traveler.Integration.RoverMachine.Connection.Clients
+namespace Traveler.Integration.RoverMachine.Connections.Clients
 {
     public interface ITcpRawClient : IDisposable
     {

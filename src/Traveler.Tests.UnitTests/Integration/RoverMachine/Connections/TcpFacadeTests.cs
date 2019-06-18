@@ -2,9 +2,9 @@
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using Traveler.Integration.RoverMachine.Connection.Clients;
-using Traveler.Integration.RoverMachine.Connection.Commons;
 using Traveler.Integration.RoverMachine.Connection.Models;
+using Traveler.Integration.RoverMachine.Connections.Clients;
+using Traveler.Integration.RoverMachine.Connections.Commons;
 using Traveler.Integration.RoverMachine.Steering.Commands;
 
 namespace Traveler.Tests.UnitTests.Integration.RoverMachine.Connections

@@ -1,4 +1,4 @@
-﻿namespace Traveler.Integration.RoverMachine.Connection.Commons
+﻿namespace Traveler.Integration.RoverMachine.Connections.Commons
 {
     public interface ITcpFacade
     {

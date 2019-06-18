@@ -1,20 +1,23 @@
 ﻿using System;
-using Traveler.Integration.RoverMachine.Connection.Commons;
+using Traveler.Integration.RoverMachine.Connection.Models;
+using Traveler.Integration.RoverMachine.Connections.Clients;
+using Traveler.Integration.RoverMachine.Connections.Commons;
 
 namespace Traveler.Integration.RoverMachine.Connections.Services
 {
     public class ConnectionsService : IConnectionsService
     {
-        private readonly ITcpFacade _tcpFacade;
+        private readonly ITcpRawClientsFactory _tcpRawClientsFactory;
 
-        public ConnectionsService(ITcpFacade tcpFacade)
+        public ConnectionsService(ITcpRawClientsFactory tcpRawClientsFactory)
         {
-            _tcpFacade = tcpFacade;
+            this._tcpRawClientsFactory = tcpRawClientsFactory;
         }
 
-        public void SendCommand<T>(T command) where T : ICommand
+        public void SendCommand<T>(T command, IpAddress ipAddress) where T : ICommand
         {
-            throw new NotImplementedException();
+            var tcpFacade = new TcpFacade(ipAddress, this._tcpRawClientsFactory);
+            tcpFacade.Send(command);
         }
     }
 }

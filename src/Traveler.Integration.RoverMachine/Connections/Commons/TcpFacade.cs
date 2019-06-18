@@ -1,9 +1,9 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
-using Traveler.Integration.RoverMachine.Connection.Clients;
 using Traveler.Integration.RoverMachine.Connection.Models;
+using Traveler.Integration.RoverMachine.Connections.Clients;
 
-namespace Traveler.Integration.RoverMachine.Connection.Commons
+namespace Traveler.Integration.RoverMachine.Connections.Commons
 {
     public class TcpFacade : ITcpFacade
     {

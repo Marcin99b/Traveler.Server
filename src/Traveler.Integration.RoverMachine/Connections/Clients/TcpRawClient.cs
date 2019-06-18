@@ -1,6 +1,5 @@
 ﻿using System.Net.Sockets;
 using System.Threading;
-using Traveler.Integration.RoverMachine.Connection.Clients;
 using Traveler.Integration.RoverMachine.Connection.Models;
 
 namespace Traveler.Integration.RoverMachine.Connections.Clients

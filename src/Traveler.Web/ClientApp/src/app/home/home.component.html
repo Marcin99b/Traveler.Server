@@ -1,26 +1,24 @@
   <div id="power">Power: {{ p.value }}</div>
   <mat-slider thumbLabel
               vertical
-              tickInterval="25"
               min="-100"
               max="100"
               #p
-              value="0"
+              [value]="power"
               step="25"
               (change)="powerChange($event)" color="primary" style="width: 50px; height: 300px;"></mat-slider>
 
   <div id="steering">Steering: {{ s.value }}</div>
   <mat-slider thumbLabel
               horizontal
-              tickInterval="25"
               min="-100"
               max="100"
               #s
-              value="0"
+              [value]="steering"
               step="25"
               (change)="steeringChange($event)" color="primary" style="width: 300px; height: 50px;"></mat-slider>
 
-
+  <button mat-fab color="warn" (click)="reset()">Reset</button>
 <video width="400" controls>
   <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
 </video>

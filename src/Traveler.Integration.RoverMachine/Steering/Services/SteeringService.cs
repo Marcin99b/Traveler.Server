@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using Traveler.Integration.RoverMachine.Connection.Models;
 using Traveler.Integration.RoverMachine.Connections.Services;
 using Traveler.Integration.RoverMachine.Steering.Commands;
 
@@ -36,7 +38,7 @@ namespace Traveler.Integration.RoverMachine.Steering.Services
             }
 
             var command = new UpdateSteeringInfoCommand(left, right, reverseGear);
-            this._connectionsService.SendCommand(command);
+            this._connectionsService.SendCommand(command, new IpAddress(IPAddress.Loopback.ToString(), 1234));
         }
     }
 }
