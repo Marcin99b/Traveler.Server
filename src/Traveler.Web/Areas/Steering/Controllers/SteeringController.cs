@@ -20,7 +20,7 @@ namespace Traveler.Web.Areas.Steering.Controllers
         public IActionResult SetSteering([FromBody] SetSteeringRequest request)
         {
             this._steeringService.UpdateSteeringInfo(request.Power, request.Steering, request.ReverseGear, 
-                new IpAddress(IPAddress.Loopback.ToString(), 1234));
+                new IpAddress(request.IpAddress, 1234));
             return Ok();
         }
 
