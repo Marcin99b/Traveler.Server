@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
@@ -20,20 +21,25 @@ namespace Traveler.Tests.IntegrationTests.Integration.RoverMachine.Connections
         {
             //Arrange
             var result = new byte[0];
-            var testData = "abc";
+            var testData = new byte[5] { 1, 2, 3, 4, 5 };
 
             var tcpReceiverMock = new Mock<IReceiver>();
             tcpReceiverMock.Setup(x => x.ReceivedData(It.IsAny<byte[]>()))
                 .Callback<byte[]>(x => result = x);
 
             var port = 1234;
-
             var listener = new TcpRawListener(port);
-            var client = new TcpRawClient(new IpAddress(IPAddress.Loopback.ToString(), port));
 
             //Act
-            Task.Run(() => listener.StartListening(tcpReceiverMock.Object)).Start();
-            client.Send(Encoding.UTF8.GetBytes(testData));
+            Task.Run(() => listener.StartListening(tcpReceiverMock.Object));
+
+            var client = new TcpRawClient(new IpAddress(IPAddress.Loopback.ToString(), port));
+            client.Send(testData);
+
+            while (result.Length == 0)
+            {
+                Thread.Sleep(200);
+            }
 
             //Assert
             Assert.That(result, Is.EqualTo(testData));

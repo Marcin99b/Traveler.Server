@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -21,17 +22,31 @@ namespace Traveler.Emulators.RoverMachine.Clients
             this._tcpListener.Start();
             while (true)
             {
-                using (var client = this._tcpListener.AcceptSocket())
+
+                using (var socket = this._tcpListener.AcceptSocket())
                 {
-                    if (client.Connected)
+                    if (!socket.Connected)
                     {
-                        Console.WriteLine("Connection.");
-                        var size = client.ReceiveBufferSize;
-                        var data = new byte[size];
-                        receiver.ReceivedData(data);
-                    }
+                        Thread.Sleep(200);
+                    };
+
+                    Console.WriteLine("Connection.");
+
+                    var size = socket.ReceiveBufferSize;
+                    var buffer = new byte[size];
+                    size = socket.Receive(buffer);
+
+                    var response = buffer.Take(size).ToArray();
+
+                    receiver.ReceivedData(response);
                 }
+
             }
+        }
+
+        public void StopListening()
+        {
+            this._tcpListener.Stop();
         }
 
     }
