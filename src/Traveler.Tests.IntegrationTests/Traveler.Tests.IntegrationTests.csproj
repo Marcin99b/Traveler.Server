@@ -13,4 +13,9 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Traveler.Emulators.RoverMachine\Traveler.Emulators.RoverMachine.csproj" />
+    <ProjectReference Include="..\Traveler.Integration.RoverMachine\Traveler.Integration.RoverMachine.csproj" />
+  </ItemGroup>
+
 </Project>
