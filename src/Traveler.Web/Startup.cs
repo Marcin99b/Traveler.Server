@@ -4,6 +4,11 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Traveler.Integration.RoverMachine.Connection.Clients;
+using Traveler.Integration.RoverMachine.Connection.Commons;
+using Traveler.Integration.RoverMachine.Connections.Clients;
+using Traveler.Integration.RoverMachine.Connections.Services;
+using Traveler.Integration.RoverMachine.Steering.Services;
 using Traveler.Web.Hubs;
 
 namespace Traveler.Web
@@ -38,6 +43,13 @@ namespace Traveler.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            //todo move to IoC Container
+            services.AddScoped<ISteeringService, SteeringService>();
+            services.AddScoped<IConnectionsService, ConnectionsService>();
+            services.AddScoped<ITcpFacade, TcpFacade>();
+            services.AddScoped<ITcpRawClientsFactory, TcpRawClientsFactory>();
+            services.AddScoped<ITcpRawClient, TcpRawClient>();
 
 
         }
