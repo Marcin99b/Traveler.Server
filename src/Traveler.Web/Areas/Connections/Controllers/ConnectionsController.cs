@@ -13,6 +13,7 @@ namespace Traveler.Web.Areas.Connections.Controllers
 {
     public class ConnectionsController : BaseApiController
     {
+        //todo add pinging in loop, and signal r integration for give alerts when disconnected
         [HttpPost]
         public IActionResult Connect([FromBody] ConnectRequest request)
         {
